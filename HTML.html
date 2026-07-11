@@ -1,1 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة ذكاء 30 | اشتراكات أدوات الذكاء الاصطناعي العالمية</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #131c2e;
+            --accent-color: #00f2fe;
+            --accent-gradient: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --price-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* الإعلان الشفاف الذي يغطي الصفحة بالكامل */
+        #invisible-ad-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0); 
+            z-index: 999999; 
+            cursor: pointer;
+        }
+
+        /* خلفية جمالية متحركة */
+        .background-glow {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.15) 0%, rgba(0,0,0,0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            padding: 20px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(11, 15, 25, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 900;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* قسم الهيرو الرئيسي */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 18px;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn {
+            background: var(--accent-gradient);
+            color: #000;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.4);
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 35px rgba(0, 242, 254, 0.6);
+        }
+
+        /* شبكة الأدوات */
+        .products-section {
+            padding: 60px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 50px;
+            font-weight: 800;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--accent-gradient);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 242, 254, 0.3);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+        
+        .brand-name {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 12px;
+            font-weight: 700;
+            direction: ltr;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+        }
+
+        .price-tag {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--price-color);
+        }
+
+        .price-tag span {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .buy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+
+        .card:hover .buy-btn {
+            background: var(--accent-gradient);
+            color: #000;
+            border-color: transparent;
+            font-weight: 700;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+        }
+
+        /* قسم الميزات السريعة */
+        .features {
+            background: rgba(19, 28, 46, 0.4);
+            padding: 60px 5%;
+            margin-top: 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .features-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .feature-item h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .feature-item p {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 32px; }
+            .nav-links { display: none; }
+            .grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="invisible-ad-overlay" onclick="triggerFirstAd(event)" ontouchstart="triggerFirstAd(event)"></div>
+
+    <div class="background-glow"></div>
+
+    <header>
+        <div class="logo" onclick="redirectToAd(event)">ذكاء برو AI</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="redirectToAd(event)">الرئيسية</a></li>
+            <li><a href="#" onclick="redirectToAd(event)">الأدوات العالمية</a></li>
+            <li><a href="#" onclick="redirectToAd(event)">طريقة التفعيل</a></li>
+            <li><a href="#" onclick="redirectToAd(event)">الدعم الفني</a></li>
+        </ul>
+    </header>
+
+    <section class="hero">
+        <h1>اشترك في <span>أشهر أدوات الذكاء الاصطناعي</span> بـ 30 درهم فقط!</h1>
+        <p>بدلاً من دفع مئات الدولارات شهرياً، احصل على حسابات واشتراكات مدفوعة في ChatGPT Plus و Midjourney وغيرها بأسعار لا تقبل المنافسة.</p>
+        <button class="hero-btn" onclick="redirectToAd(event)">اشترك الآن واستلم فوراً</button>
+    </section>
+
+    <section class="products-section">
+        <h2 class="section-title">الأدوات المتاحة للاشتراك الفوري</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <div>
+                    <div class="card-icon">💬</div>
+                    <div class="brand-name">OPENAI</div>
+                    <h3>ChatGPT Plus</h3>
+                    <p>احصل على اشتراك شات جي بي تي بلس (GPT-4o) لكتابة المحتوى، تحليل البيانات، والمحادثة المتقدمة.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon">🎨</div>
+                    <div class="brand-name">DESIGN</div>
+                    <h3>Midjourney</h3>
+                    <p>أقوى أداة لتوليد الصور الفنية والواقعية بدقة عالية. مثالي للمصممين وصناع المحتوى البصري.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon">🖌️</div>
+                    <div class="brand-name">GRAPHICS</div>
+                    <h3>Canva Pro</h3>
+                    <p>تفعيل كانفا برو الرسمي لتصميم السوشيال ميديا، العروض التقديمية، مع كل مميزات الذكاء الاصطناعي المدفوعة.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon">🧠</div>
+                    <div class="brand-name">ANTHROPIC</div>
+                    <h3>Claude 3 Pro</h3>
+                    <p>البديل الأقوى لـ ChatGPT، يتميز بكتابة برمجية ومقالات طويلة مع قدرة هائلة على قراءة الملفات الضخمة.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon">🎙️</div>
+                    <div class="brand-name">VOICE OVER</div>
+                    <h3>ElevenLabs</h3>
+                    <p>الموقع الأول عالمياً في توليد الصوت البشري (Voiceover) واستنساخ الأصوات العربية والأجنبية باحترافية.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div>
+                    <div class="card-icon">💻</div>
+                    <div class="brand-name">DEVELOPMENT</div>
+                    <h3>GitHub Copilot</h3>
+                    <p>المساعد الذكي للمبرمجين. يكتب الأكواد عنك، يكتشف الأخطاء، ويختصر وقت البرمجة إلى النصف.</p>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">30 <span>درهم/شهر</span></div>
+                    <button class="buy-btn" onclick="redirectToAd(event)">تفعيل الحساب</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="features-wrapper">
+            <div class="feature-item">
+                <h4>🚀 استلاف فوري</h4>
+                <p>تستلم بيانات الحساب المدفوع تلقائياً ومباشرة بعد إتمام عملية الاشتراك.</p>
+            </div>
+            <div class="feature-item">
+                <h4>🔒 حسابات مضمونة</h4>
+                <p>ضمان كامل طوال فترة الاشتراك مع دعم فني متواجد لحل أي مشكلة.</p>
+            </div>
+            <div class="feature-item">
+                <h4>💰 توفير هائل</h4>
+                <p>بدل دفع أكثر من 200 درهم لكل أداة، احصل عليها هنا بـ 30 درهماً فقط!</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 لـ منصة ذكاء برو.</p>
+    </footer>
+
+    <script>
+        // الرمز (Token) الخاص بك مدمج هنا
+        const MY_TOKEN = "TFarSe26is5o698RvVetzhgE7ZMLRMZBHb";
+        
+        // ⚠️ هام جداً: استبدل الرابط أدناه برابط الإعلان المباشر (Direct Link) الخاص بك من شركة الإعلانات
+        const BASE_AD_URL = "https://example.com/click"; 
+        
+        // الرابط النهائي الذي يدمج رابط الإعلانات مع الرمز الخاص بك
+        const FULL_AD_LINK = BASE_AD_URL + "?zone=" + MY_TOKEN;
+
+        // 1. عند أول لمسة على أي مكان في الشاشة (الإعلان الشفاف)
+        function triggerFirstAd(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // يفتح الإعلان في نافذة جديدة
+            window.open(FULL_AD_LINK, '_blank');
+            
+            // يحذف الطبقة الشفافة فوراً ليتمكن الزائر من استخدام الموقع والضغط على الأزرار
+            const overlay = document.getElementById('invisible-ad-overlay');
+            if (overlay) {
+                overlay.remove();
+            }
+        }
+
+        // 2. عند الضغط على أي زر داخل الموقع بعد حذف الطبقة الشفافة
+        function redirectToAd(event) {
+            if (event) {
+                event.preventDefault();
+            }
+            window.open(FULL_AD_LINK, '_blank');
+        }
+    </script>
+
+</body>
+</html>
 
